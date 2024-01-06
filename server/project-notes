@@ -7,6 +7,13 @@ npm init -y
 npm i express
 npm i nodemon -D
 
+   Git  Setup
+     git init
+     git add .
+     git commit -m "Initial commit"
+     git remote add origin https://github.com/navasck/mern-technotes.git
+     git push -u origin master
+
 Part 2 - Middleware
 
 npm i cookie-parser cors uuid date-fns

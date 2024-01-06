@@ -3,7 +3,22 @@ const app = express();
 
 // provides utilities for working with file and directory paths.
 const path = require('path');
+
+const { logger } = require('./middleware/logger');
+const errorHandler = require('./middleware/errorHandler');
+
+// cookie-parser middleware is commonly used to parse and handle HTTP cookies in your web application.
+// The cookie-parser middleware parses the Cookie header from the incoming HTTP request and populates 'req.cookies' with an object keyed by cookie names.
+const cookieParser = require('cookie-parser');
+
+// The cors middleware is commonly used to handle Cross-Origin Resource Sharing (CORS) in web applications.
+const cors = require('cors');
+const corsOptions = require('./config/corsOptions');
 const PORT = process.env.PORT || 3500;
+
+app.use(logger);
+
+app.use(cors(corsOptions));
 
 // Body Parsing Middleware:  Parses the request body, making it accessible through req.body.
 // Parse JSON-encoded bodies
@@ -13,10 +28,10 @@ app.use(express.urlencoded({ extended: true }));
 
 // Custom Middleware
 // Middlewares have access to the request object (req), the response object (res), and the next middleware function in the application’s request-response cycle (next).
-const logger = (req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-  next();
-};
+// const logger = (req, res, next) => {
+//   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+//   next();
+// };
 
 // express.static: This is middleware provided by Express to serve static files. It takes the root directory from which to serve the static assets.
 app.use('/', express.static(path.join(__dirname, 'public')));
@@ -34,5 +49,7 @@ app.all('*', (req, res) => {
     res.type('txt').send('404 Not Found');
   }
 });
+
+app.use(errorHandler);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
