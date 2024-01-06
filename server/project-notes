@@ -1,0 +1,12 @@
+Part 1
+
+https://github.com/gitdagray/mern_stack_course/tree/main
+
+npm init -y
+
+npm i express
+npm i nodemon -D
+
+Part 2 - Middleware
+
+npm i cookie-parser cors uuid date-fns
