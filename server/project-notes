@@ -29,3 +29,6 @@ npm i mongoose mongoose-sequence dotenv colors
         mongodb+srv://<username>:<password>@cluster0.g9ie2h8.mongodb.net/<database-name>?retryWrites=true&w=majority
 
         // used for connecting to a MongoDB Atlas cluster, a cloud-based MongoDB service.
+
+        //  collection -  grouping of MongoDB documents. It is similar to a table in a relational database.
+        //  Document   -  A document is a unit of data in MongoDB, equivalent to a row in a relational database table.
