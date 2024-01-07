@@ -1,10 +1,12 @@
+// dotenv is a popular Node.js module used for loading environment variables from a file named .env into process.env. It's commonly used in Node.js applications to manage configuration settings and sensitive information such as API keys, database connection strings, and other environment-specific variables.
+require('dotenv').config();
 const express = require('express');
 const app = express();
 
 // provides utilities for working with file and directory paths.
 const path = require('path');
 
-const { logger } = require('./middleware/logger');
+const { logger, logEvents } = require('./middleware/logger');
 const errorHandler = require('./middleware/errorHandler');
 
 // cookie-parser middleware is commonly used to parse and handle HTTP cookies in your web application.
@@ -14,7 +16,12 @@ const cookieParser = require('cookie-parser');
 // The cors middleware is commonly used to handle Cross-Origin Resource Sharing (CORS) in web applications.
 const cors = require('cors');
 const corsOptions = require('./config/corsOptions');
+
+// Mongoose is an Object Data Modeling (ODM) library for MongoDB and Node.js, providing a higher-level, schema-based abstraction over the MongoDB JavaScript driver.
+const mongoose = require('mongoose');
 const PORT = process.env.PORT || 3500;
+
+console.log('NODE_ENV', process.env.NODE_ENV);
 
 app.use(logger);
 
@@ -25,6 +32,8 @@ app.use(cors(corsOptions));
 app.use(express.json());
 // Parse URL-encoded bodies
 app.use(express.urlencoded({ extended: true }));
+
+app.use(cookieParser());
 
 // Custom Middleware
 // Middlewares have access to the request object (req), the response object (res), and the next middleware function in the application’s request-response cycle (next).

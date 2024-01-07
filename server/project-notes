@@ -17,3 +17,7 @@ npm i nodemon -D
 Part 2 - Middleware
 
 npm i cookie-parser cors uuid date-fns
+
+Part 3- Mongo DB
+
+npm i mongoose mongoose-sequence dotenv
