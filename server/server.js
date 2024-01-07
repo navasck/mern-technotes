@@ -66,4 +66,25 @@ app.all('*', (req, res) => {
 
 app.use(errorHandler);
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+mongoose.connection.once('open', () => {
+  console.log('Connected to MongoDB');
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+});
+
+mongoose.connection.on('error', (err) => {
+  console.log(err);
+  logEvents(
+    `${err.no}: ${err.code}\t${err.syscall}\t${err.hostname}`,
+    'mongoErrLog.log'
+  );
+});
+
+
+// Mongoose uses the Node.js EventEmitter pattern to provide a set of events that you can listen to in your application.
+// mongoose.connection.once('open', () => { ... });:
+
+// This listens for the 'open' event, which is emitted once when Mongoose successfully connects to MongoDB. When the connection is open, it logs a message indicating that it's connected to MongoDB and starts the Express server using app.listen().
+
+// This is a way to ensure that certain actions, like starting your server, only happen after a successful database connection has been established.
