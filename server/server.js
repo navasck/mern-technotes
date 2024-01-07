@@ -1,5 +1,7 @@
 // dotenv is a popular Node.js module used for loading environment variables from a file named .env into process.env. It's commonly used in Node.js applications to manage configuration settings and sensitive information such as API keys, database connection strings, and other environment-specific variables.
 require('dotenv').config();
+//get colors in your node.js console.
+const colors = require('colors');
 const express = require('express');
 const app = express();
 
@@ -16,12 +18,15 @@ const cookieParser = require('cookie-parser');
 // The cors middleware is commonly used to handle Cross-Origin Resource Sharing (CORS) in web applications.
 const cors = require('cors');
 const corsOptions = require('./config/corsOptions');
+const connectDB = require('./config/dbConn');
 
 // Mongoose is an Object Data Modeling (ODM) library for MongoDB and Node.js, providing a higher-level, schema-based abstraction over the MongoDB JavaScript driver.
 const mongoose = require('mongoose');
 const PORT = process.env.PORT || 3500;
 
 console.log('NODE_ENV', process.env.NODE_ENV);
+
+connectDB();
 
 app.use(logger);
 

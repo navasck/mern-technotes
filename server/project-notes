@@ -20,4 +20,12 @@ npm i cookie-parser cors uuid date-fns
 
 Part 3- Mongo DB
 
-npm i mongoose mongoose-sequence dotenv
+npm i mongoose mongoose-sequence dotenv colors
+
+    mongodb
+
+        https://account.mongodb.com/account/login
+
+        mongodb+srv://<username>:<password>@cluster0.g9ie2h8.mongodb.net/<database-name>?retryWrites=true&w=majority
+
+        // used for connecting to a MongoDB Atlas cluster, a cloud-based MongoDB service.
