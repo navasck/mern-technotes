@@ -19,6 +19,8 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const corsOptions = require('./config/corsOptions');
 const connectDB = require('./config/dbConn');
+// const { connectDB, insertUser } = require('./connectDB');
+
 
 // Mongoose is an Object Data Modeling (ODM) library for MongoDB and Node.js, providing a higher-level, schema-based abstraction over the MongoDB JavaScript driver.
 const mongoose = require('mongoose');
@@ -36,6 +38,9 @@ app.use(cors(corsOptions));
 // Parse JSON-encoded bodies
 app.use(express.json());
 // Parse URL-encoded bodies
+// The extended option determines how the URL-encoded data is parsed. It can have two possible values:
+// extended: true: This option allows the parsing of URL-encoded data with rich objects and arrays. It uses the qs library under the hood, which provides extended parsing capabilities.
+// extended: false: This option uses the built-in querystring module of Node.js to parse URL-encoded data. It only supports simple key-value pairs and does not handle nested objects or arrays.
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cookieParser());
@@ -51,6 +56,8 @@ app.use(cookieParser());
 app.use('/', express.static(path.join(__dirname, 'public')));
 
 app.use('/', require('./routes/root'));
+app.use('/users', require('./routes/userRoutes'));
+// app.use('/notes', require('./routes/noteRoutes'));
 
 // app.all() method is a special routing method that is used to handle all HTTP methods for a specific route.
 app.all('*', (req, res) => {
@@ -64,6 +71,7 @@ app.all('*', (req, res) => {
   }
 });
 
+// this will over write the default express error handler
 app.use(errorHandler);
 
 // app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
@@ -74,7 +82,7 @@ mongoose.connection.once('open', () => {
 });
 
 mongoose.connection.on('error', (err) => {
-  console.log(err);
+  console.log('MongoDB connection error',err);
   logEvents(
     `${err.no}: ${err.code}\t${err.syscall}\t${err.hostname}`,
     'mongoErrLog.log'

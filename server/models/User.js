@@ -28,6 +28,8 @@ module.exports = mongoose.model('User', userSchema);
 // The roles field is an array of strings representing user roles. The default value is set to 'Employee'.
 // This model can be used to perform CRUD (Create, Read, Update, Delete) operations on documents in the 'users' collection of the connected MongoDB database.
 // models are named in a singular form (e.g., 'User') and correspond to collections with names in a plural form (e.g., 'users').
+// User - model name,  users - collections name
+
 
 // eg:  {
 //   "_id": ObjectId("60e7e428b9f8082e82a0b6b4"),
