@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
-    required: true,
+    required: [true, 'Please add a text value'],
+    unique: true, // Each username must be unique
   },
   password: {
     type: String,
@@ -15,6 +16,20 @@ const userSchema = new mongoose.Schema({
       default: 'Employee',
     },
   ],
+  // hobbies: {
+  //   type: [String], // Specifies an array of strings
+  // },
+  // projects: {
+  //   type: [
+  //     {
+  //       title: String,
+  //       description: String,
+  //       startDate: Date,
+  //       endDate: Date,
+  //     },
+  //   ],
+  // },
+
   active: {
     type: Boolean,
     default: true,
@@ -38,3 +53,13 @@ module.exports = mongoose.model('User', userSchema);
 //   "roles": ["Admin"],
 //   "active": true
 // }
+
+
+// hobbies: ['Reading', 'Hiking'],
+//   projects: [
+//     {
+//       title: 'Project 1',
+//       description: 'Description for Project 1',
+//       startDate: new Date('2022-01-01'),
+//       endDate: new Date('2022-02-01'),
+//     },]
