@@ -148,9 +148,12 @@ const deleteUser = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: 'User not found' });
   }
 
-  const result = await user.deleteOne();
+  // Store user details before deletion
+  const { username, _id } = user.toObject(); // Convert Mongoose document to plain JavaScript object
 
-  const reply = `Username ${result.username} with ID ${result._id} deleted`;
+  const deletedUser = await user.deleteOne();
+
+  const reply = `Username ${username} with ID ${_id} deleted`;
 
   res.json(reply);
 });
