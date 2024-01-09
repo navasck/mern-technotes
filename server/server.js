@@ -57,7 +57,7 @@ app.use('/', express.static(path.join(__dirname, 'public')));
 
 app.use('/', require('./routes/root'));
 app.use('/users', require('./routes/userRoutes'));
-// app.use('/notes', require('./routes/noteRoutes'));
+app.use('/notes', require('./routes/noteRoutes'));
 
 // app.all() method is a special routing method that is used to handle all HTTP methods for a specific route.
 app.all('*', (req, res) => {
