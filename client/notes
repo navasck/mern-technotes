@@ -1,0 +1,6 @@
+1. yarn create vite / npm create vite@latest
+   https://vitejs.dev/guide/
+
+2. npm i react-redux @reduxjs/toolkit
+3. npm i react-router-dom react-scripts
+4. npm i @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons @fortawesome/fontawesome-svg-core
