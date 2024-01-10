@@ -5,6 +5,7 @@ import EditUserForm from './EditUserForm'
 
 const EditUser = () => {
     const { id } = useParams()
+    console.log('id from edit user', id);
 
     const user = useSelector(state => selectUserById(state, id))
 

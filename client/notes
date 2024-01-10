@@ -3,5 +3,6 @@
 
 2. npm i react-redux @reduxjs/toolkit
 3. npm i react-router-dom react-scripts
-4. npm i @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons @fortawesome/fontawesome-svg-core
+4. npm i @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons @fortawesome/        fontawesome-svg-core
 5. npm i react-spinners redux-logger -f
+6. Multiple cursor case preserve - its a vscode extension that preserves case when editing with multiple cursores

@@ -23,7 +23,11 @@ const UsersList = () => {
   }
 
   if (isSuccess) {
+    // this 'ids' are passing from query's transformResponse
     const { ids } = users;
+    console.log('ids from UsersList Component', ids);
+    // will get entities array & ids array separately
+    console.log('users from UsersList Component', users);
 
     const tableContent = ids?.length
       ? ids.map((userId) => <User key={userId} userId={userId} />)

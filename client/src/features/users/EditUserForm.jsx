@@ -54,49 +54,57 @@ const EditUserForm = ({ user }) => {
     const onUsernameChanged = e => setUsername(e.target.value)
     const onPasswordChanged = e => setPassword(e.target.value)
 
-    const onRolesChanged = e => {
-        const values = Array.from(
-            e.target.selectedOptions,
-            (option) => option.value
-        )
-        setRoles(values)
-    }
+    const onRolesChanged = (e) => {
+      // Convert the selectedOptions HTMLCollection to an array of values
+      // Array.from is used to convert the HTMLCollection to an array.
+      // Array.from is a built-in JavaScript function that creates a new, shallow-copied array from an iterable object (or array-like object). It allows you to convert objects that are iterable or array-like into an actual array.
+      // Array.from(iterable, mapFunction, thisArg);
 
-    const onActiveChanged = () => setActive(prev => !prev)
+      const values = Array.from(
+        e.target.selectedOptions,
+        (option) => option.value
+      );
+      // Set the state (roles) with the array of selected values
+      setRoles(values);
+    };
+
+    const onActiveChanged = () => setActive((prev) => !prev);
 
     const onSaveUserClicked = async (e) => {
-        if (password) {
-            await updateUser({ id: user.id, username, password, roles, active })
-        } else {
-            await updateUser({ id: user.id, username, roles, active })
-        }
-    }
+      if (password) {
+        await updateUser({ id: user.id, username, password, roles, active });
+      } else {
+        await updateUser({ id: user.id, username, roles, active });
+      }
+    };
 
     const onDeleteUserClicked = async () => {
-        await deleteUser({ id: user.id })
-    }
+      await deleteUser({ id: user.id });
+    };
 
-    const options = Object.values(ROLES).map(role => {
-        return (
-            <option
-                key={role}
-                value={role}
+    const options = Object.values(ROLES).map((role) => {
+      return (
+        <option key={role} value={role}>
+          {' '}
+          {role}
+        </option>
+      );
+    });
 
-            > {role}</option >
-        )
-    })
-
-    let canSave
+    let canSave;
     if (password) {
-        canSave = [roles.length, validUsername, validPassword].every(Boolean) && !isLoading
+      canSave =
+        [roles.length, validUsername, validPassword].every(Boolean) &&
+        !isLoading;
     } else {
-        canSave = [roles.length, validUsername].every(Boolean) && !isLoading
+      canSave = [roles.length, validUsername].every(Boolean) && !isLoading;
     }
 
-    const errClass = (isError || isDelError) ? "errmsg" : "offscreen"
-    const validUserClass = !validUsername ? 'form__input--incomplete' : ''
-    const validPwdClass = password && !validPassword ? 'form__input--incomplete' : ''
-    const validRolesClass = !Boolean(roles.length) ? 'form__input--incomplete' : ''
+    const errClass = isError || isDelError ? 'errmsg' : 'offscreen';
+    const validUserClass = !validUsername ? 'form__input--incomplete' : '';
+    const validPwdClass =
+      password && !validPassword ? 'form__input--incomplete' : '';
+    const validRolesClass = !roles.length ? 'form__input--incomplete' : '';
 
     const errContent = (error?.data?.message || delerror?.data?.message) ?? ''
 
