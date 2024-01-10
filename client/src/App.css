@@ -191,7 +191,7 @@ tr {
   display: contents;
 }
 
-.table {
+.table-layout {
   font-size: 1rem;
   width: 100%;
   display: grid;
@@ -354,7 +354,7 @@ tr {
     padding: 1em;
   }
 
-  .table {
+  .table-layout {
     font-size: 1.5rem;
   }
 

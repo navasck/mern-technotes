@@ -6,3 +6,6 @@
 4. npm i @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons @fortawesome/        fontawesome-svg-core
 5. npm i react-spinners redux-logger -f
 6. Multiple cursor case preserve - its a vscode extension that preserves case when editing with multiple cursores
+7. tailwind css in vite
+   npm install -D tailwindcss postcss autoprefixer
+   npx tailwindcss init -p

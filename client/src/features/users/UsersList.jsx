@@ -34,7 +34,7 @@ const UsersList = () => {
       : null;
 
     content = (
-      <table className='table table--users'>
+      <table className='table--users table-layout'>
         <thead className='table__thead'>
           <tr>
             <th scope='col' className='table__th user__username'>
