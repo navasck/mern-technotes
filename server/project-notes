@@ -36,3 +36,27 @@ npm i mongoose mongoose-sequence dotenv colors
 Part 4 -  Controllers
 
         npm i express-async-handler bcrypt
+
+Part 8 -  Authentication & Authorization
+
+  Authentication:
+    Authentication is the process of verifying the identity of a user, system, or entity. It answers the question, "Who are you?" and ensures that a user is indeed the person they claim to be.
+  Authorization:
+    Authorization is the process of granting or denying access to specific resources or actions based on the authenticated user's permissions. It answers the question, "What are you allowed to do?" Authorization ensures that users can only access the resources or perform actions they are explicitly allowed to. Common authorization mechanisms include:
+  JSON Web Tokens (JWT)
+    > user Authorization Header
+    > sent with every http request
+    > allow access to api endpoints
+    > endpoints provide data resourses
+
+    npm i express-rate-limit
+       express-rate-limit is a middleware for Express.js, a popular web framework for Node.js. This middleware helps protect your web application from brute-force attacks or other types of abuse by limiting the rate at which clients can make requests.
+    npm i jsonwebtoken
+       jsonwebtoken is a popular npm package for handling JSON Web Tokens (JWT) in Node.js applications. JWT is a compact, URL-safe means of representing claims to be transferred between two parties. It is commonly used for authentication and information exchange between parties.
+
+       to create ACCESS_TOKEN_SECRET & REFRESH_TOKEN_SECRET
+
+       in terminal,
+
+               node
+               require('crypto').randomBytes(64).toString('hex')

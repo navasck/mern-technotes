@@ -9,6 +9,7 @@ const EditNote = () => {
 
     const note = useSelector(state => selectNoteById(state, id))
     const users = useSelector(selectAllUsers)
+    console.log('users from Edit Note', users);
 
     const content = note && users ? <EditNoteForm note={note} users={users} /> : <p>Loading...</p>
 
