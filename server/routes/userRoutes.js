@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const usersController = require('../controllers/usersController');
+const verifyJWT = require('../middleware/verifyJWT');
+
+// this middleware will be applied for all the routs inside this file.
+router.use(verifyJWT);
 
 router
   .route('/')

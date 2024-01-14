@@ -64,12 +64,16 @@ const login = asyncHandler(async (req, res) => {
   );
 
   // Create secure cookie with refresh token
+  // res.cookie('jwt', refreshToken, { ... }): Sets an HTTP-only cookie named 'jwt' in the server's response with the value of the newly generated refresh token.
+  // when we access http://localhost:3500/auth , we will receive our access token in body. we also received more than that.
+  // we will receive the secure cookie and it has refresh token in it. (Top right section in postman- cookies- jwt)
   res.cookie('jwt', refreshToken, {
-    httpOnly: true, //accessible only by web server
-    secure: true, //https
+    httpOnly: true, //Ensures that the cookie is only accessible by the server and not by client-side JavaScript, enhancing security.
+    secure: true, //https  - Requires the use of HTTPS for secure transmission of the cookie. This is crucial for protecting sensitive information during transmission.
+
     // This is often necessary for scenarios where your frontend and backend are hosted on different domains or subdomains.
-    sameSite: 'None', //cross-site cookie
-    maxAge: 7 * 24 * 60 * 60 * 1000, //cookie expiry: set to match rT
+    sameSite: 'None', // Allows cross-site cookie requests.
+    maxAge: 7 * 24 * 60 * 60 * 1000, //cookie expiry: matching the expiration time of the associated refresh token.
   });
 
   // Send accessToken containing username and roles
@@ -81,15 +85,63 @@ const login = asyncHandler(async (req, res) => {
 // @desc Refresh
 // @route GET /auth/refresh
 // @access Public - because access token has expired
-const refresh = (req, res) => {};
+
+// route handler for refreshing an access token using a refresh token.
+const refresh = (req, res) => {
+  // The refresh function is expected to handle a refresh token sent in the HTTP cookies of the request.
+  const cookies = req.cookies;
+
+  if (!cookies?.jwt) return res.status(401).json({ message: 'Unauthorized' });
+
+  const refreshToken = cookies.jwt;
+  // jwt.verify section of the code is responsible for verifying the integrity and authenticity of the refresh token received in the HTTP cookies.
+  jwt.verify(
+    refreshToken,
+    process.env.REFRESH_TOKEN_SECRET,
+    // decoded: The decoded payload of the JWT if verification is successful. This typically includes information about the user or any claims embedded in the token.
+    asyncHandler(async (err, decoded) => {
+      if (err) return res.status(403).json({ message: 'Forbidden' });
+
+      const foundUser = await User.findOne({
+        username: decoded.username,
+      }).exec();
+
+      if (!foundUser) return res.status(401).json({ message: 'Unauthorized' });
+
+      const accessToken = jwt.sign(
+        {
+          UserInfo: {
+            username: foundUser.username,
+            roles: foundUser.roles,
+          },
+        },
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: '15m' }
+      );
+
+      res.json({ accessToken });
+    })
+  );
+};
 
 // @desc Logout
 // @route POST /auth/logout
 // @access Public - just to clear cookie if exists
-const logout = (req, res) => {};
+const logout = (req, res) => {
+  // check for cookies, we are expecting to get that http only secure cookie that has the refresh token.
+  const cookies = req.cookies;
+  if (!cookies?.jwt) return res.sendStatus(204); //No content
+  // you have to pass all of the same options  when you created the cookie.
+  // { httpOnly: true, sameSite: 'None', secure: true }
+  res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
+  res.json({ message: 'Cookie cleared' });
+};
 
 module.exports = {
   login,
   refresh,
   logout,
 };
+
+// all this router enpoints does'nt protect the other end points yet with those tokens. for that we need to create a middleware , that will verify the token everytime make a request to the protected endpoints.
+  // -  for this we are creating verifyJWT.js middleware
