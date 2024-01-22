@@ -22,11 +22,17 @@ export const authApiSlice = apiSlice.injectEndpoints({
         try {
           //const { data } =
           // await queryFulfilled: This is an asynchronous call to wait for the completion of the network request.
-          await queryFulfilled;
-          //console.log(data)
+          // await queryFulfilled;
+          const { data } = await queryFulfilled;
+          console.log('data from logout queryFulfilled', data); // {message: 'Cookie cleared'}
+          // this message setting from api backend
+
           dispatch(logOut());
           // dispatch(apiSlice.util.resetApiState()): This dispatches an action to reset the state of the associated API slice. This is commonly used to handle loading, error, and success states associated with asynchronous actions.
-          dispatch(apiSlice.util.resetApiState());
+          // as we added inside setTimeout, it gives plenty of time to go head and confirm that its unmounted that list component whether it is users or list component
+          setTimeout(() => {
+            dispatch(apiSlice.util.resetApiState());
+          }, 1000);
         } catch (err) {
           console.log(err);
         }

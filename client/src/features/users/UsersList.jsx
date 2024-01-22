@@ -1,6 +1,8 @@
 import { useGetUsersQuery } from './usersApiSlice';
 import User from './User';
 
+// the first argument is typically used for passing variables or parameters to the query.
+// 'usersList' - We will be able to see these query labels in Redux Devtools
 const UsersList = () => {
   const {
     data: users,
@@ -8,11 +10,15 @@ const UsersList = () => {
     isSuccess,
     isError,
     error,
-  } = useGetUsersQuery(undefined, {
+  } = useGetUsersQuery('usersList', {
     pollingInterval: 60000,
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true,
   });
+
+  // pollingInterval: 60000: Automatically refetches data every 60 seconds.
+  // refetchOnFocus: true: Refetches data when the component regains focus.
+  // refetchOnMountOrArgChange: true: Refetches data when the component mounts or its arguments change.
 
   let content;
 
