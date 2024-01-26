@@ -1,5 +1,5 @@
 import { apiSlice } from '../../app/api/apiSlice';
-import { logOut } from './authSlice';
+import { logOut, setCredentials } from './authSlice';
 // The provided code appears to be setting up an API slice using Redux Toolkit's createSlice and injectEndpoints functions. It's defining a set of asynchronous actions related to authentication, including login, logout, and token refresh.
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -43,6 +43,17 @@ export const authApiSlice = apiSlice.injectEndpoints({
         url: '/auth/refresh',
         method: 'GET',
       }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          console.log(data); // this will be accessToken
+          const { accessToken } = data;
+          // dispatching action creater 'setCredentials'
+          dispatch(setCredentials({ accessToken }));
+        } catch (err) {
+          console.log(err);
+        }
+      },
     }),
   }),
 });

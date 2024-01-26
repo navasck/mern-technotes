@@ -70,6 +70,7 @@ const login = asyncHandler(async (req, res) => {
   res.cookie('jwt', refreshToken, {
     httpOnly: true, //Ensures that the cookie is only accessible by the server and not by client-side JavaScript, enhancing security.
     secure: true, //https  - Requires the use of HTTPS for secure transmission of the cookie. This is crucial for protecting sensitive information during transmission.
+    // you need to set the cookie as secure: false, to create the users using postman or thunder client. but once you begin testing the refreshToken on the react front end you need to switch the cookie to secure: true.
 
     // This is often necessary for scenarios where your frontend and backend are hosted on different domains or subdomains.
     sameSite: 'None', // Allows cross-site cookie requests.
