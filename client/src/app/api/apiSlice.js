@@ -56,7 +56,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
     } else {
       // HTTP 403 Forbidden response status code indicates that the server understands the request but refuses to authorize it.
       if (refreshResult?.error?.status === 403) {
-        refreshResult.error.data.message = 'Your login has expired. ';
+        refreshResult.error.data.message = 'Your login has expired.';
       }
       return refreshResult;
     }

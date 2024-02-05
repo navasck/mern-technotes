@@ -35,9 +35,12 @@ const UsersList = () => {
     // will get entities array & ids array separately
     console.log('users from UsersList Component', users);
 
-    const tableContent = ids?.length
-      ? ids.map((userId) => <User key={userId} userId={userId} />)
-      : null;
+    // const tableContent = ids?.length
+    //   ? ids.map((userId) => <User key={userId} userId={userId} />)
+    //   : null;
+
+    const tableContent =
+      ids?.length && ids.map((userId) => <User key={userId} userId={userId} />);
 
     content = (
       <table className='table--users table-layout'>
